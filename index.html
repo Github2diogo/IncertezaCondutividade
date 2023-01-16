@@ -2,7 +2,7 @@
 <html>
 <head>
 
-<title>Método 2 pontos</title>
+<title>IPT-LME Incerteza Condutividade</title>
 <!-- <meta name="viewport" content="width=device-width, initial-scale=1" title="LABirintus"> -->
 <meta
   name="viewport"
@@ -16,7 +16,7 @@
 <body>
 <!-- //////////////////////////////////////////////////////////////// -->
 <div id="versao" class="versao" >v. 1.0</div>
-<div id="titulo" class="titulo" >IPT-LME Condutividade</div>
+<div id="titulo" class="titulo" >IPT-LME Incerteza Condutividade</div>
 
 <!-- //////////////////////////////////////////////////////////////// -->
  <!-- tabela configurações -->
@@ -26,7 +26,7 @@
 <div class="nomeCampo">Incerteza do termômetro (°C) <input class="campoEntrada" onkeyup='verTeclado(this, event)' id="configuracoes_d6" type="text" value="0,1"/></div>
 <div class="nomeCampo">Variabilidade da temperatura (°C) <input class="campoEntrada" onkeyup='verTeclado(this, event)' id="configuracoes_d7" type="text" value="0,1"/></div>
 <div class="nomeCampo">Não-linearidade da faixa (%) <input class="campoEntrada" onkeyup='verTeclado(this, event)' id="configuracoes_d8" type="text" value="0,1"/></div>
-<div class="nomeCampo">Coeficiente de temperatura (1/°C) <input class="campoEntrada" onkeyup='verTeclado(this, event)' id="configuracoes_d9" type="text" value="0,6"/></div>
+<div class="nomeCampo">Coeficiente de temperatura (1/°C) <input class="campoEntrada" onkeyup='verTeclado(this, event)' id="configuracoes_d9" type="text" value="0,02"/></div>
 </td></tr></table>
 <!-- tabela configurações -->
 
@@ -75,18 +75,15 @@
 
 <!-- tabela cálculo detalhado -->
 <div id="div_calcDetalhado" style="display: none">
-<div class='subtitulo_calcDetalhado'>Cálculo incerteza k'</div>
-<table id="tabela_calcDetalhadoUkLin" class="tabela_calcDetalhado" align="center" border="0" width="0px"></table>
-<div class='nomeCampo'>&nbsp</div>
-<div class='subtitulo_calcDetalhado'>Cálculo incerteza pH X</div>
-<table id="tabela_calcDetalhadoUpHX" class="tabela_calcDetalhado" align="center" border="0" width="0px"></table>
+<div class='subtitulo_calcDetalhado'>Cálculo incerteza</div>
+<table id="tabela_calcDetalhadoUCond" class="tabela_calcDetalhado" align="center" border="0" width="0px"></table>
 <div class='nomeCampo'>&nbsp</div>
 </div>
 <!-- tabela cálculo detalhado -->
 
 <div class="subtitulo">Resultados</div>
-<div class='resultado' id="resp_phX"></div>
-<div class='resultado'id="resp_uphX"></div>
+<div class='resultado' id="resp_U"></div>
+<div class='resultado' id="resp_k"></div>
 <div class='nomeCampo'>&nbsp</div>
 
 <!-- tabela botão exibir/ocultar detalhes cálculo -->
