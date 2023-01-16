@@ -278,6 +278,23 @@ function calcular()
     // exibe a tabela de resultados que estava oculta
     document.getElementById('tabela_resultados').style.display = "";
 
+    // valor k(x) resultados
+    var kx = 
+        parseFloat(document.getElementById('condutividade_g7').value.replace(',', '.')) *
+        (
+            ((
+            parseFloat(document.getElementById('condutividade_g14').value.replace(',', '.'))+
+            parseFloat(document.getElementById('condutividade_g15').value.replace(',', '.'))+
+            parseFloat(document.getElementById('condutividade_g16').value.replace(',', '.'))
+            )/3)
+        /
+            ((
+            parseFloat(document.getElementById('condutividade_g10').value.replace(',', '.'))+
+            parseFloat(document.getElementById('condutividade_g11').value.replace(',', '.'))+
+            parseFloat(document.getElementById('condutividade_g12').value.replace(',', '.'))            
+            )/3)
+        );
+
     // ks
         var ks = parseFloat(document.getElementById('condutividade_g7').value.replace(',', '.'));
 
@@ -341,490 +358,228 @@ function calcular()
     var variabilidade_kmx_uiY2 = quadrado(variabilidade_kmx_ciUxi);
 
     // Resolução kMx
-    var resolucao_kmx_uxi = 0;
-    var resolucao_kmx_div = 0;
-    var resolucao_kmx_coef = 0;
+    var resolucao_kmx_uxi = parseFloat(document.getElementById('configuracoes_d5').value.replace(',', '.'))/2;
+    var resolucao_kmx_div = Math.sqrt(3);
+    var resolucao_kmx_coef = ks/kms;
     var resolucao_kmx_ciUxi = resolucao_kmx_uxi * resolucao_kmx_coef/resolucao_kmx_div;
     var resolucao_kmx_uiY2 = quadrado(resolucao_kmx_ciUxi);
     
     // Temp kMs
-    var temp_kms_uxi = 0;
-    var temp_kms_div = 0;
-    var temp_kms_coef = 0;
+    var temp_kms_uxi = parseFloat(document.getElementById('configuracoes_d6').value.replace(',', '.'));
+    var temp_kms_div = 2;
+    var temp_kms_coef = (ks * kmx * kms * parseFloat(document.getElementById('configuracoes_d9').value.replace(',', '.')))/quadrado(kms);
     var temp_kms_ciUxi = temp_kms_uxi * temp_kms_coef/temp_kms_div;
     var temp_kms_uiY2 = quadrado(temp_kms_ciUxi);
 
     // Variab Temp kMs
-    var variabilidade_temp_kms_uxi = 0;
-    var variabilidade_temp_kms_div = 0;
-    var variabilidade_temp_kms_coef = 0;
+    var variabilidade_temp_kms_uxi = parseFloat(document.getElementById('configuracoes_d7').value.replace(',', '.'));
+    var variabilidade_temp_kms_div = Math.sqrt(n);
+    var variabilidade_temp_kms_coef = (ks * kmx * kms * parseFloat(document.getElementById('configuracoes_d9').value.replace(',', '.')))/quadrado(kms);
     var variabilidade_temp_kms_ciUxi = variabilidade_temp_kms_uxi * variabilidade_temp_kms_coef/variabilidade_temp_kms_div;
     var variabilidade_temp_kms_uiY2 = quadrado(variabilidade_temp_kms_ciUxi);
 
     // Temp kMx
-    var temp_kmx_uxi = 0;
-    var temp_kmx_div = 0;
-    var temp_kmx_coef = 0;
+    var temp_kmx_uxi = parseFloat(document.getElementById('configuracoes_d6').value.replace(',', '.'));
+    var temp_kmx_div = 2;
+    var temp_kmx_coef = (ks * kmx * kms * parseFloat(document.getElementById('configuracoes_d9').value.replace(',', '.')))/quadrado(kms);
     var temp_kmx_ciUxi = temp_kmx_uxi * temp_kmx_coef/temp_kmx_div;
     var temp_kmx_uiY2 = quadrado(temp_kmx_ciUxi);
 
     // Variab Temp kMx
-    var variabilidade_temp_kmx_uxi = 0;
-    var variabilidade_temp_kmx_div = 0;
-    var variabilidade_temp_kmx_coef = 0;
+    var variabilidade_temp_kmx_uxi = parseFloat(document.getElementById('configuracoes_d7').value.replace(',', '.'));
+    var variabilidade_temp_kmx_div = Math.sqrt(n);
+    var variabilidade_temp_kmx_coef = (ks * kmx * kms * parseFloat(document.getElementById('configuracoes_d9').value.replace(',', '.')))/quadrado(kms);
     var variabilidade_temp_kmx_ciUxi = variabilidade_temp_kmx_uxi * variabilidade_temp_kmx_coef/variabilidade_temp_kmx_div;
     var variabilidade_temp_kmx_uiY2 = quadrado(variabilidade_temp_kmx_ciUxi);
 
     // Não-linearidade (parte elétrica)
-    var naoLinearidade_eletrica_uxi = 0;
-    var naoLinearidade_eletrica_div = 0;
-    var naoLinearidade_eletrica_coef = 0;
+    var naoLinearidade_eletrica_uxi = parseFloat(document.getElementById('configuracoes_d8').value.replace(',', '.')) * kmx/100;
+    var naoLinearidade_eletrica_div = Math.sqrt(3);
+    var naoLinearidade_eletrica_coef = ks / kms;
     var naoLinearidade_eletrica_ciUxi = naoLinearidade_eletrica_uxi * naoLinearidade_eletrica_coef/naoLinearidade_eletrica_div;
     var naoLinearidade_eletrica_uiY2 = quadrado(naoLinearidade_eletrica_ciUxi);
 
-
-
-
-
-    // variabilidade E (maior)
-    var leituras_eMaior = [
-        parseFloat(document.getElementById('metodo2pontos_i14').value.replace(',', '.')),
-        parseFloat(document.getElementById('metodo2pontos_i15').value.replace(',', '.')),
-        parseFloat(document.getElementById('metodo2pontos_i16').value.replace(',', '.'))
-    ];
-    var variabilidade_eMaior_uxi = desvpada(leituras_eMaior);
-    var variabilidade_eMaior_div = Math.sqrt(4);
-    var variabilidade_eMaior_coef = Math.abs( 1/(phMaior-phMenor) );
-    var variabilidade_eMaior_ciUxi = variabilidade_eMaior_uxi * variabilidade_eMaior_coef/variabilidade_eMaior_div;
-    var variabilidade_eMaior_uiY2 = quadrado(variabilidade_eMaior_ciUxi);
-
-
-    // resolução E (maior)
-    var resolucao_eMaior_uxi = parseFloat(document.getElementById('configuracoes_e5').value.replace(',', '.')/2);
-    var resolucao_eMaior_div = Math.sqrt(3);
-    var resolucao_eMaior_coef = variabilidade_eMaior_coef;
-    var resolucao_eMaior_ciUxi = resolucao_eMaior_uxi * resolucao_eMaior_coef/resolucao_eMaior_div;
-    var resolucao_eMaior_uiY2 = quadrado(resolucao_eMaior_ciUxi);
-
-    // variabilidade E (menor)
-    var leituras_eMenor = [
-        parseFloat(document.getElementById('metodo2pontos_i18').value.replace(',', '.')),
-        parseFloat(document.getElementById('metodo2pontos_i19').value.replace(',', '.')),
-        parseFloat(document.getElementById('metodo2pontos_i20').value.replace(',', '.'))
-    ];
-    var variabilidade_eMenor_uxi = desvpada(leituras_eMenor);
-    var variabilidade_eMenor_div = Math.sqrt(4);
-    var variabilidade_eMenor_coef = variabilidade_eMaior_coef;
-    var variabilidade_eMenor_ciUxi = variabilidade_eMenor_uxi * variabilidade_eMenor_coef/variabilidade_eMenor_div;
-    var variabilidade_eMenor_uiY2 = quadrado(variabilidade_eMenor_ciUxi);
-    
-    // resolução E (menor)
-    var resolucao_eMenor_uxi = resolucao_eMaior_uxi;
-    var resolucao_eMenor_div = Math.sqrt(3);
-    var resolucao_eMenor_coef = variabilidade_eMaior_coef;
-    var resolucao_eMenor_ciUxi = resolucao_eMenor_uxi * resolucao_eMenor_coef/resolucao_eMenor_div;
-    var resolucao_eMenor_uiY2 = quadrado(resolucao_eMenor_ciUxi);
-
-    // Cert pH (maior)
-    var cert_phMaior_uxi = uPhMaior;
-    var cert_phMaior_div = calculo_c11_kPhMaior;
-    var cert_phMaior_coef = Math.abs((eMaior-eMenor)/quadrado((phMaior-phMenor)));
-    var cert_phMaior_ciUxi = cert_phMaior_uxi * cert_phMaior_coef/cert_phMaior_div;
-    var cert_phMaior_uiY2 = quadrado(cert_phMaior_ciUxi);
-
-    // Cert pH (menor)
-    var cert_phMenor_uxi = uPhMenor;
-    var cert_phMenor_div = calculo_c15_kPhMenor;
-    var cert_phMenor_coef = cert_phMaior_coef;
-    var cert_phMenor_ciUxi = cert_phMenor_uxi * cert_phMenor_coef/cert_phMenor_div;
-    var cert_phMenor_uiY2 = quadrado(cert_phMenor_ciUxi);
-
-    // variabilidade Temp
-    var variabilidade_temp_uxi = parseFloat(document.getElementById('configuracoes_e7').value.replace(',', '.'));
-    var variabilidade_temp_div = Math.sqrt(3);
-    var variabilidade_temp_coef = calculo_c5_R * Math.log(10) * 1000/calculo_c6_F;
-    var variabilidade_temp_ciUxi = variabilidade_temp_uxi * variabilidade_temp_coef/variabilidade_temp_div;
-    var variabilidade_temp_uiY2 = quadrado(variabilidade_temp_ciUxi);
-    
-
-    // Cert. Temp
-    var cert_temp_uxi = parseFloat(document.getElementById('configuracoes_e6').value.replace(',', '.'));
-    var cert_temp_div = 2;
-    var cert_temp_coef = variabilidade_temp_coef;
-    var cert_temp_ciUxi = cert_temp_uxi * cert_temp_coef/cert_temp_div;
-    var cert_temp_uiY2 = quadrado(cert_temp_ciUxi);
-
-
-    // Junção de referência
-    var juncaoDeReferencia_uxi = parseFloat(document.getElementById('configuracoes_e9').value.replace(',', '.'));
-    var juncaoDeReferencia_div = Math.sqrt(3);
-    var juncaoDeReferencia_coef = variabilidade_eMaior_coef;
-    var juncaoDeReferencia_ciUxi = juncaoDeReferencia_uxi * juncaoDeReferencia_coef/juncaoDeReferencia_div;
-    var juncaoDeReferencia_uiY2 = quadrado(juncaoDeReferencia_ciUxi);
-
-
+    //////////
     // incerteza calculada
-    var ukLinha_total = 
-            variabilidade_eMaior_uiY2 +
-            resolucao_eMaior_uiY2 +
-            variabilidade_eMenor_uiY2 +
-            resolucao_eMenor_uiY2 +
-            cert_phMaior_uiY2 +
-            cert_phMenor_uiY2 +
-            variabilidade_temp_uiY2 +
-            cert_temp_uiY2 +
-            juncaoDeReferencia_uiY2;
     
-    var ukLinha_variabilidade_eMaior_contrib = variabilidade_eMaior_uiY2 / ukLinha_total * 100
-    var ukLinha_resolucao_eMaior_contrib = resolucao_eMaior_uiY2 / ukLinha_total * 100
-    var ukLinha_variabilidade_eMenor_contrib = variabilidade_eMenor_uiY2 / ukLinha_total * 100
-    var ukLinha_resolucao_eMenor_contrib = resolucao_eMenor_uiY2 / ukLinha_total * 100
-    var ukLinha_cert_phMaior_contrib = cert_phMaior_uiY2 / ukLinha_total * 100
-    var ukLinha_cert_phMenor_contrib = cert_phMenor_uiY2 / ukLinha_total * 100
-    var ukLinha_variabilidade_temp_contrib = variabilidade_temp_uiY2 / ukLinha_total * 100
-    var ukLinha_cert_temp_contrib = cert_temp_uiY2 / ukLinha_total * 100
-    var ukLinha_juncaoDeReferencia_contrib = juncaoDeReferencia_uiY2 / ukLinha_total * 100
+    // total
+    var uCond_total = 
+            cert_kx_uiY2 +
+            variabilidade_kms_uiY2 +
+            resolucao_kms_uiY2 +
+            variabilidade_kmx_uiY2 +
+            resolucao_kmx_uiY2 +
+            temp_kms_uiY2 +
+            variabilidade_temp_kms_uiY2 +
+            temp_kmx_uiY2 +
+            variabilidade_temp_kmx_uiY2 +
+            naoLinearidade_eletrica_uiY2;
+    
+    var uCond_cert_kx_contrib = cert_kx_uiY2 / uCond_total * 100
+    var uCond_variabilidade_kms_contrib = variabilidade_kms_uiY2 / uCond_total * 100
+    var uCond_resolucao_kms_contrib = resolucao_kms_uiY2 / uCond_total * 100
+    var uCond_variabilidade_kmx_contrib = variabilidade_kmx_uiY2 / uCond_total * 100
+    var uCond_resolucao_kmx_contrib = resolucao_kmx_uiY2 / uCond_total * 100
+    var uCond_temp_kms_contrib = temp_kms_uiY2 / uCond_total * 100
+    var uCond_variabilidade_temp_kms_contrib = variabilidade_temp_kms_uiY2 / uCond_total * 100
+    var uCond_temp_kmx_contrib = temp_kmx_uiY2 / uCond_total * 100
+    var uCond_variabilidade_temp_kmx_contrib = variabilidade_temp_kmx_uiY2 / uCond_total * 100
+    var uCond_naoLinearidade_eletrica_contrib = naoLinearidade_eletrica_uiY2 / uCond_total * 100
 
-    var ukLinha_uc = Math.sqrt(ukLinha_total);
+    // uc
+    var uCond_uc = Math.sqrt(uCond_total);
     
-    var ukLinha_veff = Math.pow(ukLinha_uc,4)/
-        (
-            Math.pow(variabilidade_eMaior_ciUxi,4)/3 + 
-            Math.pow(variabilidade_eMenor_ciUxi,4)/3 + 
-            Math.pow(variabilidade_temp_ciUxi,4)/3
-        );
+    // veff
+    var uCond_veff = 0;
+    if(variabilidade_kms_uxi == 0 && variabilidade_kmx_uxi == 0){uCond_veff = 1000}
+    else{
+        uCond_veff = 
+        Math.pow(uCond_uc,4)/
+            (
+                Math.pow(variabilidade_kms_ciUxi,4)/3 + 
+                Math.pow(variabilidade_kmx_ciUxi,4)/3
+            );
+    }
     
-    var ukLinha_k = 0;
-    if ( (ukLinha_veff > 60) || (variabilidade_eMaior_ciUxi == 0 && variabilidade_eMenor_ciUxi == 0))
-    {ukLinha_k = 2;}
-    else {ukLinha_k = invt(0.05, ukLinha_veff);}
+    // k
+    var uCond_k = 0;
+    if ( (uCond_veff > 60) || (variabilidade_kms_ciUxi == 0 && variabilidade_kmx_ciUxi == 0))
+    {uCond_k = 2;}
+    else {uCond_k = invt(0.05, uCond_veff);}
 
-    var ukLinha_u = ukLinha_k * ukLinha_uc;
+    // U
+    var uCond_u = uCond_k * uCond_uc;
 
     ////////////////////////////////////////////////////////////////
     // tabela de resultados
 
-    // pegamos a resolução a partir da incerteza do pH
-    
-    // maior
-    var resPhMaior = parseInt(uPhMaior.toString().length) - (1 + parseInt(uPhMaior.toString().indexOf('.'))) ;
-    // console.log('resPhMaior: ', resPhMaior);
-    
-    // menor
-    var resPhMenor = parseInt(uPhMenor.toString().length) - (1 + parseInt(uPhMenor.toString().indexOf('.')));
-    // console.log('resPhMenor: ', resPhMenor);
-
-    var resResultados = Math.max(resPhMaior, resPhMenor);
+    // pegamos a resolução a partir da incerteza do certificado da solução de condutividade
+    var fonteResolucao = parseFloat(document.getElementById('condutividade_g8').value.replace(',', '.'));
+    var resResultados = parseInt(fonteResolucao.toString().length) - (1 + parseInt(fonteResolucao.toString().indexOf('.'))) ;
     // console.log('resResultados: ', resResultados);
 
-    var ukLinha_tabela = [];
+    var uCond_tabela = [];
 
-    var ukLinha_indice_tabela = [];
-    ukLinha_indice_tabela.push('Componente');
-    ukLinha_indice_tabela.push('uxi');
-    ukLinha_indice_tabela.push('div');
-    ukLinha_indice_tabela.push('coef');
-    ukLinha_indice_tabela.push('uxi*coef/div');
-    ukLinha_indice_tabela.push('(uxi*coef/div)²');
-    ukLinha_indice_tabela.push('Contrib. %');
-    ukLinha_tabela.push(ukLinha_indice_tabela);
+    var uCond_indice_tabela = [];
+    uCond_indice_tabela.push('Componente');
+    uCond_indice_tabela.push('uxi');
+    uCond_indice_tabela.push('div');
+    uCond_indice_tabela.push('coef');
+    uCond_indice_tabela.push('uxi*coef/div');
+    uCond_indice_tabela.push('(uxi*coef/div)²');
+    uCond_indice_tabela.push('Contrib. %');
+    uCond_tabela.push(uCond_indice_tabela);
 
-    var variabilidade_eMaior_tabela = [];
-    variabilidade_eMaior_tabela.push('Variabilidade eMaior');
-    variabilidade_eMaior_tabela.push(variabilidade_eMaior_uxi);
-    variabilidade_eMaior_tabela.push(variabilidade_eMaior_div);
-    variabilidade_eMaior_tabela.push(variabilidade_eMaior_coef);
-    variabilidade_eMaior_tabela.push(variabilidade_eMaior_ciUxi);
-    variabilidade_eMaior_tabela.push(variabilidade_eMaior_uiY2);
-    variabilidade_eMaior_tabela.push(ukLinha_variabilidade_eMaior_contrib);
-    ukLinha_tabela.push(variabilidade_eMaior_tabela);
+    var cert_kx_tabela = [];
+    cert_kx_tabela.push('Cert k(x)');
+    cert_kx_tabela.push(cert_kx_uxi);
+    cert_kx_tabela.push(cert_kx_div);
+    cert_kx_tabela.push(cert_kx_coef);
+    cert_kx_tabela.push(cert_kx_ciUxi);
+    cert_kx_tabela.push(cert_kx_uiY2);
+    cert_kx_tabela.push(uCond_cert_kx_contrib);
+    uCond_tabela.push(cert_kx_tabela);
 
-    var resolucao_eMaior_tabela = [];
-    resolucao_eMaior_tabela.push('Resolucao eMaior');
-    resolucao_eMaior_tabela.push(resolucao_eMaior_uxi);
-    resolucao_eMaior_tabela.push(resolucao_eMaior_div);
-    resolucao_eMaior_tabela.push(resolucao_eMaior_coef);
-    resolucao_eMaior_tabela.push(resolucao_eMaior_ciUxi);
-    resolucao_eMaior_tabela.push(resolucao_eMaior_uiY2);
-    resolucao_eMaior_tabela.push(ukLinha_resolucao_eMaior_contrib);
-    ukLinha_tabela.push(resolucao_eMaior_tabela);
+    var variabilidade_kms_tabela = [];
+    variabilidade_kms_tabela.push('Variabilidade kMs');
+    variabilidade_kms_tabela.push(variabilidade_kms_uxi);
+    variabilidade_kms_tabela.push(variabilidade_kms_div);
+    variabilidade_kms_tabela.push(variabilidade_kms_coef);
+    variabilidade_kms_tabela.push(variabilidade_kms_ciUxi);
+    variabilidade_kms_tabela.push(variabilidade_kms_uiY2);
+    variabilidade_kms_tabela.push(uCond_variabilidade_kms_contrib);
+    uCond_tabela.push(variabilidade_kms_tabela);
 
-    var variabilidade_eMenor_tabela = [];
-    variabilidade_eMenor_tabela.push('Variabilidade eMenor');
-    variabilidade_eMenor_tabela.push(variabilidade_eMenor_uxi);
-    variabilidade_eMenor_tabela.push(variabilidade_eMenor_div);
-    variabilidade_eMenor_tabela.push(variabilidade_eMenor_coef);
-    variabilidade_eMenor_tabela.push(variabilidade_eMenor_ciUxi);
-    variabilidade_eMenor_tabela.push(variabilidade_eMenor_uiY2);
-    variabilidade_eMenor_tabela.push(ukLinha_variabilidade_eMenor_contrib);
-    ukLinha_tabela.push(resolucao_eMaior_tabela);
+    var resolucao_kms_tabela = [];
+    resolucao_kms_tabela.push('Resolução kMs');
+    resolucao_kms_tabela.push(resolucao_kms_uxi);
+    resolucao_kms_tabela.push(resolucao_kms_div);
+    resolucao_kms_tabela.push(resolucao_kms_coef);
+    resolucao_kms_tabela.push(resolucao_kms_ciUxi);
+    resolucao_kms_tabela.push(resolucao_kms_uiY2);
+    resolucao_kms_tabela.push(uCond_resolucao_kms_contrib);
+    uCond_tabela.push(resolucao_kms_tabela);
 
-    var resolucao_eMenor_tabela = [];
-    resolucao_eMenor_tabela.push('Resolucao eMenor');
-    resolucao_eMenor_tabela.push(resolucao_eMenor_uxi);
-    resolucao_eMenor_tabela.push(resolucao_eMenor_div);
-    resolucao_eMenor_tabela.push(resolucao_eMenor_coef);
-    resolucao_eMenor_tabela.push(resolucao_eMenor_ciUxi);
-    resolucao_eMenor_tabela.push(resolucao_eMenor_uiY2);
-    resolucao_eMenor_tabela.push(ukLinha_resolucao_eMenor_contrib);
-    ukLinha_tabela.push(resolucao_eMenor_tabela);
+    var variabilidade_kmx_tabela = [];
+    variabilidade_kmx_tabela.push('Variabilidade kMx');
+    variabilidade_kmx_tabela.push(variabilidade_kmx_uxi);
+    variabilidade_kmx_tabela.push(variabilidade_kmx_div);
+    variabilidade_kmx_tabela.push(variabilidade_kmx_coef);
+    variabilidade_kmx_tabela.push(variabilidade_kmx_ciUxi);
+    variabilidade_kmx_tabela.push(variabilidade_kmx_uiY2);
+    variabilidade_kmx_tabela.push(uCond_variabilidade_kmx_contrib);
+    uCond_tabela.push(variabilidade_kmx_tabela);
 
-    var cert_phMaior_tabela = [];
-    cert_phMaior_tabela.push('Certificado pH Maior');
-    cert_phMaior_tabela.push(cert_phMaior_uxi);
-    cert_phMaior_tabela.push(cert_phMaior_div);
-    cert_phMaior_tabela.push(cert_phMaior_coef);
-    cert_phMaior_tabela.push(cert_phMaior_ciUxi);
-    cert_phMaior_tabela.push(cert_phMaior_uiY2);
-    cert_phMaior_tabela.push(ukLinha_cert_phMaior_contrib);
-    ukLinha_tabela.push(cert_phMaior_tabela);
+    var resolucao_kmx_tabela = [];
+    resolucao_kmx_tabela.push('Resolução kMx');
+    resolucao_kmx_tabela.push(resolucao_kmx_uxi);
+    resolucao_kmx_tabela.push(resolucao_kmx_div);
+    resolucao_kmx_tabela.push(resolucao_kmx_coef);
+    resolucao_kmx_tabela.push(resolucao_kmx_ciUxi);
+    resolucao_kmx_tabela.push(resolucao_kmx_uiY2);
+    resolucao_kmx_tabela.push(uCond_resolucao_kmx_contrib);
+    uCond_tabela.push(resolucao_kmx_tabela);
 
-    var cert_phMenor_tabela = [];
-    cert_phMenor_tabela.push('Certificado pH Menor');
-    cert_phMenor_tabela.push(cert_phMenor_uxi);
-    cert_phMenor_tabela.push(cert_phMenor_div);
-    cert_phMenor_tabela.push(cert_phMenor_coef);
-    cert_phMenor_tabela.push(cert_phMenor_ciUxi);
-    cert_phMenor_tabela.push(cert_phMenor_uiY2);
-    cert_phMenor_tabela.push(ukLinha_cert_phMenor_contrib);
-    ukLinha_tabela.push(cert_phMenor_tabela);
+    var temp_kms_tabela = [];
+    temp_kms_tabela.push('Temp kMs');
+    temp_kms_tabela.push(temp_kms_uxi);
+    temp_kms_tabela.push(temp_kms_div);
+    temp_kms_tabela.push(temp_kms_coef);
+    temp_kms_tabela.push(temp_kms_ciUxi);
+    temp_kms_tabela.push(temp_kms_uiY2);
+    temp_kms_tabela.push(uCond_temp_kms_contrib);
+    uCond_tabela.push(temp_kms_tabela);
 
-    var variabilidade_temp_tabela = [];
-    variabilidade_temp_tabela.push('Variabilidade temp.');
-    variabilidade_temp_tabela.push(variabilidade_temp_uxi);
-    variabilidade_temp_tabela.push(variabilidade_temp_div);
-    variabilidade_temp_tabela.push(variabilidade_temp_coef);
-    variabilidade_temp_tabela.push(variabilidade_temp_ciUxi);
-    variabilidade_temp_tabela.push(variabilidade_temp_uiY2);
-    variabilidade_temp_tabela.push(ukLinha_variabilidade_temp_contrib);
-    ukLinha_tabela.push(variabilidade_temp_tabela);
+    var variabilidade_temp_kms_tabela = [];
+    variabilidade_temp_kms_tabela.push('Variabilidade Temp kMs');
+    variabilidade_temp_kms_tabela.push(variabilidade_temp_kms_uxi);
+    variabilidade_temp_kms_tabela.push(variabilidade_temp_kms_div);
+    variabilidade_temp_kms_tabela.push(variabilidade_temp_kms_coef);
+    variabilidade_temp_kms_tabela.push(variabilidade_temp_kms_ciUxi);
+    variabilidade_temp_kms_tabela.push(variabilidade_temp_kms_uiY2);
+    variabilidade_temp_kms_tabela.push(uCond_variabilidade_temp_kms_contrib);
+    uCond_tabela.push(variabilidade_temp_kms_tabela);
+
+    var temp_kmx_tabela = [];
+    temp_kmx_tabela.push('Temp kMx');
+    temp_kmx_tabela.push(temp_kmx_uxi);
+    temp_kmx_tabela.push(temp_kmx_div);
+    temp_kmx_tabela.push(temp_kmx_coef);
+    temp_kmx_tabela.push(temp_kmx_ciUxi);
+    temp_kmx_tabela.push(temp_kmx_uiY2);
+    temp_kmx_tabela.push(uCond_temp_kmx_contrib);
+    uCond_tabela.push(temp_kmx_tabela);
+
+    var variabilidade_temp_kmx_tabela = [];
+    variabilidade_temp_kmx_tabela.push('Variabilidade Temp kMx');
+    variabilidade_temp_kmx_tabela.push(variabilidade_temp_kmx_uxi);
+    variabilidade_temp_kmx_tabela.push(variabilidade_temp_kmx_div);
+    variabilidade_temp_kmx_tabela.push(variabilidade_temp_kmx_coef);
+    variabilidade_temp_kmx_tabela.push(variabilidade_temp_kmx_ciUxi);
+    variabilidade_temp_kmx_tabela.push(variabilidade_temp_kmx_uiY2);
+    variabilidade_temp_kmx_tabela.push(uCond_variabilidade_temp_kmx_contrib);
+    uCond_tabela.push(variabilidade_temp_kmx_tabela);
+
+    var naoLinearidade_eletrica_tabela = [];
+    naoLinearidade_eletrica_tabela.push('Não Linearidade Elétrica');
+    naoLinearidade_eletrica_tabela.push(naoLinearidade_eletrica_uxi);
+    naoLinearidade_eletrica_tabela.push(naoLinearidade_eletrica_div);
+    naoLinearidade_eletrica_tabela.push(naoLinearidade_eletrica_coef);
+    naoLinearidade_eletrica_tabela.push(naoLinearidade_eletrica_ciUxi);
+    naoLinearidade_eletrica_tabela.push(naoLinearidade_eletrica_uiY2);
+    naoLinearidade_eletrica_tabela.push(uCond_naoLinearidade_eletrica_contrib);
+    uCond_tabela.push(naoLinearidade_eletrica_tabela);
 
 
-    var cert_temp_tabela = [];
-    cert_temp_tabela.push('Certificado temp.');
-    cert_temp_tabela.push(cert_temp_uxi);
-    cert_temp_tabela.push(cert_temp_div);
-    cert_temp_tabela.push(cert_temp_coef);
-    cert_temp_tabela.push(cert_temp_ciUxi);
-    cert_temp_tabela.push(cert_temp_uiY2);
-    cert_temp_tabela.push(ukLinha_cert_temp_contrib);
-    ukLinha_tabela.push(cert_temp_tabela);
-
-
-    var juncaoDeReferencia_tabela = [];
-    juncaoDeReferencia_tabela.push('Junção de ref.');
-    juncaoDeReferencia_tabela.push(juncaoDeReferencia_uxi);
-    juncaoDeReferencia_tabela.push(juncaoDeReferencia_div);
-    juncaoDeReferencia_tabela.push(juncaoDeReferencia_coef);
-    juncaoDeReferencia_tabela.push(juncaoDeReferencia_ciUxi);
-    juncaoDeReferencia_tabela.push(juncaoDeReferencia_uiY2);
-    juncaoDeReferencia_tabela.push(ukLinha_juncaoDeReferencia_contrib);
-    ukLinha_tabela.push(juncaoDeReferencia_tabela);
-
-    ukLinha_tabela.push(['', '', '', '', 'Total', ukLinha_total, '']);
-    ukLinha_tabela.push(['', '', '', '', 'uc', ukLinha_uc, '']);
-    ukLinha_tabela.push(['', '', '', '', 'veff', ukLinha_veff, '']);
-    ukLinha_tabela.push(['', '', '', '', 'k', ukLinha_k, '']);
-    ukLinha_tabela.push(['', '', '', '', 'U', ukLinha_u, '']);
+    uCond_tabela.push(['', '', '', '', 'Total', uCond_total, '']);
+    uCond_tabela.push(['', '', '', '', 'uc', uCond_uc, '']);
+    uCond_tabela.push(['', '', '', '', 'veff', uCond_veff, '']);
+    uCond_tabela.push(['', '', '', '', 'k', uCond_k, '']);
+    uCond_tabela.push(['', '', '', '', 'U', uCond_u, '']);
     
-    // console.table(ukLinha_tabela);
-
-
-    ////////////////////////////////////////////////////////////////
-    // Incerteza pH(X)
-
-    // Cert pH (maior)
-    var cert_phMaior_uxi = uPhMaior;
-    var cert_phMaior_div = calculo_c11_kPhMaior;
-    var cert_phMaior_coef = 1;
-    var cert_phMaior_ciUxi = cert_phMaior_uxi * cert_phMaior_coef/cert_phMaior_div;
-    var cert_phMaior_uiY2 = quadrado(cert_phMaior_ciUxi);
-    
-    // variabilidade E (maior)
-    var variabilidade_eMaior_uxi = variabilidade_eMaior_uxi;
-    var variabilidade_eMaior_div = Math.sqrt(4);
-    var variabilidade_eMaior_coef = Math.abs(1/kLinha);
-    var variabilidade_eMaior_ciUxi = variabilidade_eMaior_uxi * variabilidade_eMaior_coef/variabilidade_eMaior_div;
-    var variabilidade_eMaior_uiY2 = quadrado(variabilidade_eMaior_ciUxi);
-    
-    // resolução E (maior)
-    var resolucao_eMaior_uxi = resolucao_eMaior_uxi;
-    var resolucao_eMaior_div = Math.sqrt(3);
-    var resolucao_eMaior_coef = variabilidade_eMaior_coef;
-    var resolucao_eMaior_ciUxi = resolucao_eMaior_uxi * resolucao_eMaior_coef/resolucao_eMaior_div;
-    var resolucao_eMaior_uiY2 = quadrado(resolucao_eMaior_ciUxi);
-
-    // variabilidade E(x)
-    var leituras_eX = [
-        parseFloat(document.getElementById('metodo2pontos_i22').value.replace(',', '.')),
-        parseFloat(document.getElementById('metodo2pontos_i23').value.replace(',', '.')),
-        parseFloat(document.getElementById('metodo2pontos_i24').value.replace(',', '.'))
-    ];
-    var variabilidade_eX_uxi = desvpada(leituras_eX);
-    var variabilidade_eX_div = Math.sqrt(4);
-    var variabilidade_eX_coef = variabilidade_eMaior_coef;
-    var variabilidade_eX_ciUxi = variabilidade_eX_uxi * variabilidade_eX_coef/variabilidade_eX_div;
-    var variabilidade_eX_uiY2 = quadrado(variabilidade_eX_ciUxi);
-
-    // resolução E(x)
-    var resolucao_eX_uxi = resolucao_eMaior_uxi;
-    var resolucao_eX_div = Math.sqrt(3);
-    var resolucao_eX_coef = variabilidade_eMaior_coef;
-    var resolucao_eX_ciUxi = resolucao_eX_uxi * resolucao_eX_coef/resolucao_eX_div;
-    var resolucao_eX_uiY2 = quadrado(resolucao_eX_ciUxi);
-
-    // incerteza k'
-    var incerteza_kLinha_uxi = ukLinha_u;
-    var incerteza_kLinha_div = ukLinha_k;
-    var incerteza_kLinha_coef = Math.abs((eX-eMaior)/( quadrado(kLinha) ));
-    var incerteza_kLinha_ciUxi = incerteza_kLinha_uxi * incerteza_kLinha_coef/incerteza_kLinha_div;
-    var incerteza_kLinha_uiY2 = quadrado(incerteza_kLinha_ciUxi);
-    
-    // Não-linearidade (parte elétrica)
-    var naoLinearidadeParteEletrica_uxi = parseFloat(document.getElementById('configuracoes_e8').value.replace(',', '.')) * eX / 100;
-    var naoLinearidadeParteEletrica_div = Math.sqrt(3);
-    var naoLinearidadeParteEletrica_coef = variabilidade_eMaior_coef;
-    var naoLinearidadeParteEletrica_ciUxi = naoLinearidadeParteEletrica_uxi * naoLinearidadeParteEletrica_coef/naoLinearidadeParteEletrica_div
-    var naoLinearidadeParteEletrica_uiY2 = quadrado(naoLinearidadeParteEletrica_ciUxi);
-
-    // incerteza calculada
-    var uphx_total =
-        cert_phMaior_uiY2 +
-        variabilidade_eMaior_uiY2 +
-        resolucao_eMaior_uiY2 +
-        variabilidade_eX_uiY2 +
-        resolucao_eX_uiY2 +
-        incerteza_kLinha_uiY2 +
-        naoLinearidadeParteEletrica_uiY2;
-
-    var uphx_cert_phMaior_contrib = cert_phMaior_uiY2 / uphx_total * 100
-    var uphx_variabilidade_eMaior_contrib = variabilidade_eMaior_uiY2 / uphx_total * 100
-    var uphx_resolucao_eMaior_contrib = resolucao_eMaior_uiY2 / uphx_total * 100
-    var uphx_variabilidade_eX_contrib = variabilidade_eX_uiY2 / uphx_total * 100
-    var uphx_resolucao_eX_contrib = resolucao_eX_uiY2 / uphx_total * 100
-    var uphx_incerteza_kLinha_contrib = incerteza_kLinha_uiY2 / uphx_total * 100
-    var uphx_naoLinearidadeParteEletrica_contrib = naoLinearidadeParteEletrica_uiY2 / uphx_total * 100
-
-    var uphx_uc = Math.sqrt(uphx_total);
-    // console.log(uphx_uc);
-    
-    var uphx_veff = 0;
-    if (variabilidade_eMaior_uxi == 0 && variabilidade_eX_uxi == 0)
-    {uphx_veff = 1000;}
-    else{
-        uphx_veff =  Math.pow(uphx_uc,4)/
-        (
-            (Math.pow(variabilidade_eMaior_ciUxi,4)/3) +
-            (Math.pow(variabilidade_eX_ciUxi,4)/3)
-        );
-    }
-
-
-    var uphx_k = 0;
-    if ( (uphx_veff > 60) || (variabilidade_eMaior_ciUxi == 0 && variabilidade_eX_ciUxi == 0))
-    {uphx_k = 2;}
-    else {uphx_k = invt(0.05, uphx_veff);}
-    
-    var uphx_u = uphx_k * uphx_uc;
-
-
-
-    // tabela de resultados
-    var uphx_tabela = [];
-
-    var uphx_indice_tabela = [];
-    uphx_indice_tabela.push('Componente');
-    uphx_indice_tabela.push('uxi');
-    uphx_indice_tabela.push('div');
-    uphx_indice_tabela.push('coef');
-    uphx_indice_tabela.push('uxi*coef/div');
-    uphx_indice_tabela.push('(uxi*coef/div)²');
-    uphx_indice_tabela.push('Contrib. %');
-    uphx_tabela.push(uphx_indice_tabela);
-
-    var cert_phMaior_tabela = [];
-    cert_phMaior_tabela.push('Certificado pH Maior');
-    cert_phMaior_tabela.push(cert_phMaior_uxi);
-    cert_phMaior_tabela.push(cert_phMaior_div);
-    cert_phMaior_tabela.push(cert_phMaior_coef);
-    cert_phMaior_tabela.push(cert_phMaior_ciUxi);
-    cert_phMaior_tabela.push(cert_phMaior_uiY2);
-    cert_phMaior_tabela.push(uphx_cert_phMaior_contrib);
-    uphx_tabela.push(cert_phMaior_tabela);
-
-    var variabilidade_eMaior_tabela = [];
-    variabilidade_eMaior_tabela.push('Variabilidade eMaior');
-    variabilidade_eMaior_tabela.push(variabilidade_eMaior_uxi);
-    variabilidade_eMaior_tabela.push(variabilidade_eMaior_div);
-    variabilidade_eMaior_tabela.push(variabilidade_eMaior_coef);
-    variabilidade_eMaior_tabela.push(variabilidade_eMaior_ciUxi);
-    variabilidade_eMaior_tabela.push(variabilidade_eMaior_uiY2);
-    variabilidade_eMaior_tabela.push(uphx_variabilidade_eMaior_contrib);
-    uphx_tabela.push(variabilidade_eMaior_tabela);
-
-    var resolucao_eMaior_tabela = [];
-    resolucao_eMaior_tabela.push('Resolução eMaior');
-    resolucao_eMaior_tabela.push(resolucao_eMaior_uxi);
-    resolucao_eMaior_tabela.push(resolucao_eMaior_div);
-    resolucao_eMaior_tabela.push(resolucao_eMaior_coef);
-    resolucao_eMaior_tabela.push(resolucao_eMaior_ciUxi);
-    resolucao_eMaior_tabela.push(resolucao_eMaior_uiY2);
-    resolucao_eMaior_tabela.push(uphx_resolucao_eMaior_contrib);
-    uphx_tabela.push(resolucao_eMaior_tabela);
-
-    var variabilidade_eX_tabela = [];
-    variabilidade_eX_tabela.push('Variabilidade Ex');
-    variabilidade_eX_tabela.push(variabilidade_eX_uxi);
-    variabilidade_eX_tabela.push(variabilidade_eX_div);
-    variabilidade_eX_tabela.push(variabilidade_eX_coef);
-    variabilidade_eX_tabela.push(variabilidade_eX_ciUxi);
-    variabilidade_eX_tabela.push(variabilidade_eX_uiY2);
-    variabilidade_eX_tabela.push(uphx_variabilidade_eX_contrib);
-    uphx_tabela.push(variabilidade_eX_tabela);
-
-    var resolucao_eX_tabela = [];
-    resolucao_eX_tabela.push('Resolução eX');
-    resolucao_eX_tabela.push(resolucao_eX_uxi);
-    resolucao_eX_tabela.push(resolucao_eX_div);
-    resolucao_eX_tabela.push(resolucao_eX_coef);
-    resolucao_eX_tabela.push(resolucao_eX_ciUxi);
-    resolucao_eX_tabela.push(resolucao_eX_uiY2);
-    resolucao_eX_tabela.push(uphx_resolucao_eX_contrib);
-    uphx_tabela.push(resolucao_eX_tabela);
-
-    var incerteza_kLinha_tabela = [];
-    incerteza_kLinha_tabela.push("Incerteza k'");
-    incerteza_kLinha_tabela.push(incerteza_kLinha_uxi);
-    incerteza_kLinha_tabela.push(incerteza_kLinha_div);
-    incerteza_kLinha_tabela.push(incerteza_kLinha_coef);
-    incerteza_kLinha_tabela.push(incerteza_kLinha_ciUxi);
-    incerteza_kLinha_tabela.push(incerteza_kLinha_uiY2);
-    incerteza_kLinha_tabela.push(uphx_incerteza_kLinha_contrib);
-    uphx_tabela.push(incerteza_kLinha_tabela);
-
-    var naoLinearidadeParteEletrica_tabela = [];
-    naoLinearidadeParteEletrica_tabela.push('Não Linearidade elétrica');
-    naoLinearidadeParteEletrica_tabela.push(naoLinearidadeParteEletrica_uxi);
-    naoLinearidadeParteEletrica_tabela.push(naoLinearidadeParteEletrica_div);
-    naoLinearidadeParteEletrica_tabela.push(naoLinearidadeParteEletrica_coef);
-    naoLinearidadeParteEletrica_tabela.push(naoLinearidadeParteEletrica_ciUxi);
-    naoLinearidadeParteEletrica_tabela.push(naoLinearidadeParteEletrica_uiY2);
-    naoLinearidadeParteEletrica_tabela.push(uphx_naoLinearidadeParteEletrica_contrib);
-    uphx_tabela.push(naoLinearidadeParteEletrica_tabela);
-
-    uphx_tabela.push(['', '', '', '', 'Total', uphx_total, '']);
-    uphx_tabela.push(['', '', '', '', 'uc', uphx_uc, '']);
-    uphx_tabela.push(['', '', '', '', 'veff', uphx_veff, '']);
-    uphx_tabela.push(['', '', '', '', 'k', uphx_k, '']);
-    uphx_tabela.push(['', '', '', '', 'U', uphx_u, '']);
-    
-
-
-    // console.table(uphx_tabela);
-    // console.log(uphx_tabela)
-    document.getElementById('resp_phX').innerHTML = 'pH X = ' +  (pHx.toFixed(resResultados).toString()).replace('.',',') + ' pH'; 
-    document.getElementById('resp_uphX').innerHTML = 'U pH X ± ' + (uphx_u.toFixed(resResultados).toString()).replace('.',',') + ' pH';
-    matriz2tabela(ukLinha_tabela, 'tabela_calcDetalhadoUkLin', 'tabela_calcDetalhado', resResultados);
-    matriz2tabela(uphx_tabela, 'tabela_calcDetalhadoUpHX', 'tabela_calcDetalhado', resResultados);
+    // console.table(uCond_tabela);
+    document.getElementById('resp_U').innerHTML = 'k(X) = ' +  (kx.toFixed(resResultados).toString()).replace('.',',') + ' µS/cm'; 
+    document.getElementById('resp_k').innerHTML = 'U k(x) ± ' +  (uCond_u.toFixed(resResultados).toString()).replace('.',',') + ' µS/cm'; 
+    matriz2tabela(uCond_tabela, 'tabela_calcDetalhadoUCond', 'tabela_calcDetalhado', resResultados);
 
     }
