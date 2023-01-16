@@ -322,6 +322,63 @@ function calcular()
     var variabilidade_kms_uiY2 = quadrado(variabilidade_kms_ciUxi);
 
     // resolução kms
+    var resolucao_kms_uxi = parseFloat(document.getElementById('configuracoes_d5').value.replace(',', '.'))/2;
+    var resolucao_kms_div = Math.sqrt(3);
+    var resolucao_kms_coef =  -1 * (ks*kmx/(quadrado(kms)));
+    var resolucao_kms_ciUxi = resolucao_kms_uxi * resolucao_kms_coef/resolucao_kms_div;
+    var resolucao_kms_uiY2 = quadrado(resolucao_kms_ciUxi);
+
+    // Variabilidade kMx
+    var leituras_kms = [];
+    var variabilidade_kmx_uxi = 0;
+    var variabilidade_kmx_div = 0;
+    var variabilidade_kmx_coef = 0;
+    var variabilidade_kmx_ciUxi = variabilidade_kmx_uxi * variabilidade_kmx_coef/variabilidade_kmx_div;
+    var variabilidade_kmx_uiY2 = quadrado(variabilidade_kmx_ciUxi);
+
+    // Resolução kMx
+    var resolucao_kmx_uxi = 0;
+    var resolucao_kmx_div = 0;
+    var resolucao_kmx_coef = 0;
+    var resolucao_kmx_ciUxi = resolucao_kmx_uxi * resolucao_kmx_coef/resolucao_kmx_div;
+    var resolucao_kmx_uiY2 = quadrado(resolucao_kmx_ciUxi);
+    
+    // Temp kMs
+    var temp_kms_uxi = 0;
+    var temp_kms_div = 0;
+    var temp_kms_coef = 0;
+    var temp_kms_ciUxi = temp_kms_uxi * temp_kms_coef/temp_kms_div;
+    var temp_kms_uiY2 = quadrado(temp_kms_ciUxi);
+
+    // Variab Temp kMs
+    var variabilidade_temp_kms_uxi = 0;
+    var variabilidade_temp_kms_div = 0;
+    var variabilidade_temp_kms_coef = 0;
+    var variabilidade_temp_kms_ciUxi = variabilidade_temp_kms_uxi * variabilidade_temp_kms_coef/variabilidade_temp_kms_div;
+    var variabilidade_temp_kms_uiY2 = quadrado(variabilidade_temp_kms_ciUxi);
+
+    // Temp kMx
+    var temp_kmx_uxi = 0;
+    var temp_kmx_div = 0;
+    var temp_kmx_coef = 0;
+    var temp_kmx_ciUxi = temp_kmx_uxi * temp_kmx_coef/temp_kmx_div;
+    var temp_kmx_uiY2 = quadrado(temp_kmx_ciUxi);
+
+    // Variab Temp kMx
+    var variabilidade_temp_kmx_uxi = 0;
+    var variabilidade_temp_kmx_div = 0;
+    var variabilidade_temp_kmx_coef = 0;
+    var variabilidade_temp_kmx_ciUxi = variabilidade_temp_kmx_uxi * variabilidade_temp_kmx_coef/variabilidade_temp_kmx_div;
+    var variabilidade_temp_kmx_uiY2 = quadrado(variabilidade_temp_kmx_ciUxi);
+
+    // Não-linearidade (parte elétrica)
+    var naoLinearidade_eletrica_uxi = 0;
+    var naoLinearidade_eletrica_div = 0;
+    var naoLinearidade_eletrica_coef = 0;
+    var naoLinearidade_eletrica_ciUxi = naoLinearidade_eletrica_uxi * naoLinearidade_eletrica_coef/naoLinearidade_eletrica_div;
+    var naoLinearidade_eletrica_uiY2 = quadrado(naoLinearidade_eletrica_ciUxi);
+
+
 
 
 
