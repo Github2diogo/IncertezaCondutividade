@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Método 2 pontos</title>
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1" title="LABirintus"> -->
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, maximum-scale=1"
+/>
+<link rel="stylesheet" href="css\css.css">
+</head>
+    
+<script type=text/javascript src="js\js.js"></script>
+
+<body>
+<!-- //////////////////////////////////////////////////////////////// -->
+<div id="versao" class="versao" >v. 1.0</div>
+<div id="titulo" class="titulo" >IPT-LME Condutividade</div>
+
+<!-- //////////////////////////////////////////////////////////////// -->
+ <!-- tabela configurações -->
+<table id="tabela_configuracoes" class="tabelaConfiguracoes" align="center" border="0" width="0px" style="display: none;"><tr><td>
+<div class="subtitulo">Configurações</div>
+<div class="nomeCampo">Resolução (µS/cm) <input class="campoEntrada" onkeyup='verTeclado(this, event)' id="configuracoes_d5" type="text" value="1"/></div>
+<div class="nomeCampo">Incerteza do termômetro (°C) <input class="campoEntrada" onkeyup='verTeclado(this, event)' id="configuracoes_d6" type="text" value="0,1"/></div>
+<div class="nomeCampo">Variabilidade da temperatura (°C) <input class="campoEntrada" onkeyup='verTeclado(this, event)' id="configuracoes_d7" type="text" value="0,1"/></div>
+<div class="nomeCampo">Não-linearidade da faixa (%) <input class="campoEntrada" onkeyup='verTeclado(this, event)' id="configuracoes_d8" type="text" value="0,1"/></div>
+<div class="nomeCampo">Coeficiente de temperatura (1/°C) <input class="campoEntrada" onkeyup='verTeclado(this, event)' id="configuracoes_d9" type="text" value="0,6"/></div>
+</td></tr></table>
+<!-- tabela configurações -->
+
+ <!-- tabela botão oculta/exibe config -->
+<table width="420" bgcolor="#fff" align="center"><tr><td align="center">
+<input class='botao' id="botaoConfig" type ="button" value='Exibir configurações' onclick="ocultaExibeConfig()" />
+</td></tr></table>
+<!-- tabela botão oculta/exibe config -->
+
+<!-- //////////////////////////////////////////////////////////////// -->
+<!-- tabela externa -->
+<table width="360" bgcolor="#eee" align="center"><tr><td align="center"> 
+<!-- tabela entrada de dados -->
+<table border="0" width="0px"><tr><td>
+<div class="subtitulo">Entrada de dados</div>
+
+<div class="nomeCampo">ks MRC (µS/cm)<input class="campoEntrada" onkeyup='verTeclado(this, event)' id="condutividade_g7" autofocus onfocus="this.focus()" type="text" value="1408"/></div>
+<div class="nomeCampo">Incerteza de ks (µS/cm)<input class="campoEntrada" onkeyup='verTeclado(this, event)' id="condutividade_g8" type="text" value="10"/></div>
+<div class="nomeCampo">&nbsp</div>
+
+<div class="nomeCampo">Leitura 1 kMs (µS/cm)<input class="campoEntrada" onkeyup='verTeclado(this, event)'id="condutividade_g10" type="text" value="1415" /></div>
+<div class="nomeCampo">Leitura 2 kMs (µS/cm)<input class="campoEntrada" onkeyup='verTeclado(this, event)' id="condutividade_g11" type="text" value="1416"/></div>
+<div class="nomeCampo">Leitura 3 kMs (µS/cm)<input class="campoEntrada" onkeyup='verTeclado(this, event)' id="condutividade_g12" type="text" value="1416"/></div>
+<div class="nomeCampo">&nbsp</div>
+
+<div class="nomeCampo">Leitura 1 condutividade X (µS/cm)<input class="campoEntrada" onkeyup='verTeclado(this, event)' id="condutividade_g14" type="text" value="1406"/></div>
+<div class="nomeCampo">Leitura 2 condutividade X (µS/cm)<input class="campoEntrada" onkeyup='verTeclado(this, event)' id="condutividade_g15" type="text" value="1409"/></div>
+<div class="nomeCampo">Leitura 3 condutividade X (µS/cm)<input class="campoEntrada" onkeyup='verTeclado(this, event)' id="condutividade_g16" type="text" value="1409"/></div>
+
+
+</td></tr></table>
+<!-- tabela entrada de dados -->
+</td></tr></table>
+<!-- tabela externa -->
+
+<!-- tabela botão calcular -->
+<table width="420" bgcolor="#fff" align="center"><tr><td align="center">
+<input class='botao'  id="botao_calcular" type ="button" value='Calcular' onclick="calcular()" />
+</td></tr></table>
+<!-- tabela botão calcular -->
+
+
+<!-- //////////////////////////////////////////////////////////////// -->
+<!-- tabela resultados -->
+<table id="tabela_resultados" border="0" width="0px" align="center" style="display: none;"><tr><td align="center"> 
+
+<!-- tabela cálculo detalhado -->
+<div id="div_calcDetalhado" style="display: none">
+<div class='subtitulo_calcDetalhado'>Cálculo incerteza k'</div>
+<table id="tabela_calcDetalhadoUkLin" class="tabela_calcDetalhado" align="center" border="0" width="0px"></table>
+<div class='nomeCampo'>&nbsp</div>
+<div class='subtitulo_calcDetalhado'>Cálculo incerteza pH X</div>
+<table id="tabela_calcDetalhadoUpHX" class="tabela_calcDetalhado" align="center" border="0" width="0px"></table>
+<div class='nomeCampo'>&nbsp</div>
+</div>
+<!-- tabela cálculo detalhado -->
+
+<div class="subtitulo">Resultados</div>
+<div class='resultado' id="resp_phX"></div>
+<div class='resultado'id="resp_uphX"></div>
+<div class='nomeCampo'>&nbsp</div>
+
+<!-- tabela botão exibir/ocultar detalhes cálculo -->
+<table width="420" bgcolor="#fff" align="center"><tr><td align="center">
+<input id="botao_calcDetalhado" class="botao_calcDetalhado" type ="button" value='Exibir cálculo detalhado' onclick="ocultaExibeCalc()" />
+</td></tr></table>
+<!-- tabela botão exibir/ocultar detalhes cálculo -->
+
+</td></tr></table>
+<!-- tabela resultados -->
+
+
+
+<!-- //////////////////////////////////////////////////////////////// -->
+
+</body>
+</html>
