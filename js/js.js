@@ -329,10 +329,14 @@ function calcular()
     var resolucao_kms_uiY2 = quadrado(resolucao_kms_ciUxi);
 
     // Variabilidade kMx
-    var leituras_kms = [];
-    var variabilidade_kmx_uxi = 0;
-    var variabilidade_kmx_div = 0;
-    var variabilidade_kmx_coef = 0;
+    var leituras_kmx = [
+        parseFloat(document.getElementById('condutividade_g14').value.replace(',', '.')),
+        parseFloat(document.getElementById('condutividade_g15').value.replace(',', '.')),
+        parseFloat(document.getElementById('condutividade_g16').value.replace(',', '.'))
+    ];
+    var variabilidade_kmx_uxi = desvpada(leituras_kmx);
+    var variabilidade_kmx_div = Math.sqrt(n);
+    var variabilidade_kmx_coef = ks/kms;
     var variabilidade_kmx_ciUxi = variabilidade_kmx_uxi * variabilidade_kmx_coef/variabilidade_kmx_div;
     var variabilidade_kmx_uiY2 = quadrado(variabilidade_kmx_ciUxi);
 
